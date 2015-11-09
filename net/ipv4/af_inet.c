@@ -117,6 +117,9 @@
 #ifdef CONFIG_IP_MROUTE
 #include <linux/mroute.h>
 #endif
+#ifdef CONFIG_RADCLOCK
+#include <asm-generic/sockios.h>
+#endif
 
 
 /* The inetsw table contains everything that inet_create needs to
@@ -852,6 +855,12 @@ int inet_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
 	struct net *net = sock_net(sk);
 
 	switch (cmd) {
+#ifdef CONFIG_RADCLOCK
+		case SIOCGRADCLOCKTSMODE:
+			break;
+		case SIOCSRADCLOCKTSMODE:
+			break;
+#endif
 	case SIOCGSTAMP:
 		err = sock_get_timestamp(sk, (struct timeval __user *)arg);
 		break;

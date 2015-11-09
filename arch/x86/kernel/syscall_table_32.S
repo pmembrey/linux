@@ -348,3 +348,7 @@ ENTRY(sys_call_table)
 	.long sys_setns
 	.long sys_process_vm_readv
 	.long sys_process_vm_writev
+#ifdef CONFIG_RADCLOCK
+	.long sys_get_vcounter
+	.long sys_get_vcounter_latency
+#endif
