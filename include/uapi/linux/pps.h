@@ -112,6 +112,7 @@ struct pps_kparams {
 struct pps_fdata {
 	struct pps_kinfo info;
 	struct pps_ktime timeout;
+	uint64_t counter;
 };
 
 struct pps_bind_args {

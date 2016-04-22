@@ -200,6 +200,7 @@ void pps_event(struct pps_device *pps, struct pps_event_time *ts, int event,
 
 		/* Save the time stamp */
 		pps->assert_tu = ts_real;
+		pps->counter = ts->counter;
 		pps->assert_sequence++;
 		dev_dbg(pps->dev, "capture assert seq #%u\n",
 			pps->assert_sequence);
@@ -214,6 +215,7 @@ void pps_event(struct pps_device *pps, struct pps_event_time *ts, int event,
 
 		/* Save the time stamp */
 		pps->clear_tu = ts_real;
+		pps->counter = ts->counter;
 		pps->clear_sequence++;
 		dev_dbg(pps->dev, "capture clear seq #%u\n",
 			pps->clear_sequence);
