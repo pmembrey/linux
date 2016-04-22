@@ -23,6 +23,10 @@
 #define PPS_GPIO_NAME "pps-gpio"
 #define pr_fmt(fmt) PPS_GPIO_NAME ": " fmt
 
+#define BCM2708_PERI_BASE        0x3F000000
+#define ST_BASE                  (BCM2708_PERI_BASE + 0x3000)   /* System Timer */
+
+
 #include <linux/init.h>
 #include <linux/kernel.h>
 #include <linux/interrupt.h>
@@ -35,6 +39,9 @@
 #include <linux/list.h>
 #include <linux/of_device.h>
 #include <linux/of_gpio.h>
+
+unsigned int *p;
+
 
 /* Info for each registered platform device */
 struct pps_gpio_device_data {
@@ -56,6 +63,7 @@ static irqreturn_t pps_gpio_irq_handler(int irq, void *data)
 	struct pps_event_time ts;
 	int rising_edge;
 
+	memcpy(&ts.counter, p, 8);
 	/* Get the time stamp first */
 	pps_get_ts(&ts);
 
@@ -96,6 +104,7 @@ static int pps_gpio_probe(struct platform_device *pdev)
 	const struct pps_gpio_platform_data *pdata = pdev->dev.platform_data;
 	struct device_node *np = pdev->dev.of_node;
 
+	p = ioremap(ST_BASE+4, 8);
 	/* allocate space for device info */
 	data = devm_kzalloc(&pdev->dev, sizeof(struct pps_gpio_device_data),
 			GFP_KERNEL);

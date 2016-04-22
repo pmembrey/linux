@@ -191,7 +191,7 @@ static long pps_cdev_ioctl(struct file *file,
 		fdata.info.assert_tu = pps->assert_tu;
 		fdata.info.clear_tu = pps->clear_tu;
 		fdata.info.current_mode = pps->current_mode;
-
+		fdata.counter = pps->counter;
 		spin_unlock_irq(&pps->lock);
 
 		err = copy_to_user(uarg, &fdata, sizeof(struct pps_fdata));

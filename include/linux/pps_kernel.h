@@ -51,6 +51,7 @@ struct pps_event_time {
 	struct timespec64 ts_raw;
 #endif /* CONFIG_NTP_PPS */
 	struct timespec64 ts_real;
+	uint64_t counter;
 };
 
 /* The main struct */
@@ -63,6 +64,7 @@ struct pps_device {
 	__u32 clear_sequence;			/* PPS' clear event seq # */
 	struct pps_ktime assert_tu;
 	struct pps_ktime clear_tu;
+	uint64_t counter;
 	int current_mode;			/* PPS mode at event time */
 
 	unsigned int last_ev;			/* last PPS event id */
